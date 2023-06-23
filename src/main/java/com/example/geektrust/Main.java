@@ -1,6 +1,7 @@
 package com.example.geektrust;
 
 import com.example.geektrust.common.Command;
+import com.example.geektrust.controller.Controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,17 +25,17 @@ public class Main {
                 String[] command = input.split(" ");
 
                 if(Objects.equals(command[0], Command.ADD_DRIVER)){
-                    System.out.println();
+                    Controller.addDriver(command[0],command[1],command[2]);
                 } else if (Objects.equals(command[0], Command.ADD_RIDER)) {
-                    System.out.println();
+                    Controller.addRider(command[0],command[1],command[2]);
                 } else if (Objects.equals(command[0], Command.MATCH)) {
-                    System.out.println();
+                    Controller.match();
                 } else if (Objects.equals(command[0], Command.START_RIDE)) {
-                    System.out.println();
+                    Controller.startRide();
                 } else if (Objects.equals(command[0], Command.STOP_RIDE)) {
-                    System.out.println();
+                    Controller.stopRide();
                 } else if (Objects.equals(command[0], Command.BILL)) {
-                    System.out.println();
+                    Controller.bill();
                 } else {
                     System.out.println("Unknown Command");
                 }
