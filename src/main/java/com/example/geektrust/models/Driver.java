@@ -22,4 +22,13 @@ public class Driver {
     public String getY_coordinate() {
         return y_coordinate;
     }
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "driver_id='" + driver_id + '\'' +
+                ", x_coordinate='" + x_coordinate + '\'' +
+                ", y_coordinate='" + y_coordinate + '\'' +
+                '}';
+    }
 }

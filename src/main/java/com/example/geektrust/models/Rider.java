@@ -22,4 +22,13 @@ public class Rider {
     public String getY_coordinate() {
         return y_coordinate;
     }
+
+    @Override
+    public String toString() {
+        return "Rider{" +
+                "rider_id='" + rider_id + '\'' +
+                ", x_coordinate='" + x_coordinate + '\'' +
+                ", y_coordinate='" + y_coordinate + '\'' +
+                '}';
+    }
 }

@@ -20,16 +20,16 @@ public class Main {
             // returns true if there is another line to read
             while (sc.hasNextLine()) {
 
-               //Add your code here to process input commands
+                // Add your code here to process input commands
                 String input = sc.nextLine();
                 String[] command = input.split(" ");
 
-                if(Objects.equals(command[0], Command.ADD_DRIVER)){
-                    Controller.addDriver(command[0],command[1],command[2]);
+                if (Objects.equals(command[0], Command.ADD_DRIVER)) {
+                    Controller.addDriver(command[1], command[2], command[3]);
                 } else if (Objects.equals(command[0], Command.ADD_RIDER)) {
-                    Controller.addRider(command[0],command[1],command[2]);
+                    Controller.addRider(command[1], command[2], command[3]);
                 } else if (Objects.equals(command[0], Command.MATCH)) {
-                    Controller.match();
+                    Controller.match(command[1]);
                 } else if (Objects.equals(command[0], Command.START_RIDE)) {
                     Controller.startRide();
                 } else if (Objects.equals(command[0], Command.STOP_RIDE)) {
