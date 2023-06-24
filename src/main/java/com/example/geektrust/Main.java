@@ -31,7 +31,7 @@ public class Main {
                 } else if (Objects.equals(command[0], Command.MATCH)) {
                     Controller.match(command[1]);
                 } else if (Objects.equals(command[0], Command.START_RIDE)) {
-                    Controller.startRide();
+                    Controller.startRide(command[1], command[2], command[3]);
                 } else if (Objects.equals(command[0], Command.STOP_RIDE)) {
                     Controller.stopRide();
                 } else if (Objects.equals(command[0], Command.BILL)) {
