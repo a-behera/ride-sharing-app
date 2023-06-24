@@ -14,6 +14,7 @@ public class Controller {
 
     static ArrayList<Match> matches = new ArrayList<>();
     static ArrayList<Ride> rides = new ArrayList<>();
+    static ArrayList<Ride> stoppedRides = new ArrayList<>();
 
     public static void addDriver(String driver_id, String x_coordinate, String y_coordinate) {
         Driver newDriver = new Driver(driver_id, x_coordinate, y_coordinate);
@@ -79,8 +80,21 @@ public class Controller {
         }
     }
 
-    public static void stopRide() {
-        System.out.println(drivers.size());
+    public static void stopRide(String ride_id, String dest_x_coordinate, String dest_y_coordinate, String time_taken) {
+        boolean isRideIdExists = false;
+        for (Ride ride : rides) {
+            if (Objects.equals(ride.getRide_id(), ride_id)) {
+                isRideIdExists = true;
+                break;
+            }
+        }
+        if (isRideIdExists) {
+            System.out.println("RIDE_STOPPED " + ride_id);
+            Ride stoppedRide = new Ride(ride_id, dest_x_coordinate, dest_y_coordinate, time_taken);
+            stoppedRides.add(stoppedRide);
+        } else {
+            System.out.println("INVALID_RIDE");
+        }
     }
 
     public static void bill() {
