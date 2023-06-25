@@ -5,6 +5,8 @@ import com.example.geektrust.models.Match;
 import com.example.geektrust.models.Ride;
 import com.example.geektrust.models.Rider;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -142,11 +144,16 @@ public class Controller {
         assert time_taken != null;
         double additional_min = 2.0 * Double.parseDouble(time_taken);
         double total_amount = base_fair + additional_km + additional_min;
-        double service_tax = total_amount + (total_amount * 0.2);
+        double service_tax = total_amount * 0.2;
 
-        double bill = Math.ceil(total_amount + service_tax);
+        double bill = total_amount + service_tax;
 
-        System.out.println("BILL " + ride_id + " " + driver_id + " " + bill);
+        BigDecimal bd = new BigDecimal(bill);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+
+        double roundedValue = bd.doubleValue();
+
+        System.out.println("BILL " + ride_id + " " + driver_id + " " + roundedValue);
 
 
     }
