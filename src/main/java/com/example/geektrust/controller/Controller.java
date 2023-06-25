@@ -90,15 +90,65 @@ public class Controller {
         }
         if (isRideIdExists) {
             System.out.println("RIDE_STOPPED " + ride_id);
-            Ride stoppedRide = new Ride(ride_id, dest_x_coordinate, dest_y_coordinate, time_taken);
+            Ride stoppedRide = new Ride(ride_id,dest_x_coordinate,dest_y_coordinate,time_taken,true);
             stoppedRides.add(stoppedRide);
         } else {
             System.out.println("INVALID_RIDE");
         }
     }
 
-    public static void bill() {
-        System.out.println(drivers.size());
+    public static void bill(String ride_id) {
+        //from start ride array get rider id.
+        String rider_id = null;
+        String driver_id = null;
+        for(Ride ride: rides){
+            if(Objects.equals(ride.getRide_id(), ride_id)){
+                 rider_id = ride.getRider_id();
+                 driver_id = ride.getDriver_id();
+                 break;
+            }
+        }
+
+        //from rider array get coordinate
+        String start_x_co = null;
+        String start_y_co = null;
+        for(Rider rider: riders){
+            if(Objects.equals(rider.getRider_id(), rider_id)){
+                start_x_co = rider.getX_coordinate();
+                start_y_co = rider.getY_coordinate();
+                break;
+            }
+        }
+
+        //from stop ride array get destinations & time taken.
+        String dest_x_co = null;
+        String dest_y_co = null;
+        String time_taken = null;
+        for(Ride ride: stoppedRides){
+            if(Objects.equals(ride.getRide_id(), ride_id)){
+                dest_x_co = ride.getDestination_x_coordinate();
+                dest_y_co = ride.getDestination_y_coordinate();
+                time_taken = ride.getTime_taken();
+                break;
+            }
+        }
+
+        //calculate distance.
+        double distance = calculateDistance(start_x_co,start_y_co,dest_x_co,dest_y_co);
+
+        //calculate bill
+        double base_fair = 50.0;
+        double additional_km = 6.5 * distance;
+        assert time_taken != null;
+        double additional_min = 2.0 * Double.parseDouble(time_taken);
+        double total_amount = base_fair + additional_km + additional_min;
+        double service_tax = total_amount + (total_amount * 0.2);
+
+        double bill = Math.ceil(total_amount + service_tax);
+
+        System.out.println("BILL " + ride_id + " " + driver_id + " " + bill);
+
+
     }
 
     private static double calculateDistance(String rider_x, String rider_y, String driver_x, String driver_y) {
