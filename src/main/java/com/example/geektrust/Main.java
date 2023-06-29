@@ -13,7 +13,7 @@ public class Main {
         try {
 
             // the file to be opened for reading
-            FileInputStream fis = new FileInputStream("sample_input\\input4.txt ");
+            FileInputStream fis = new FileInputStream(args[0]);
 
             Scanner sc = new Scanner(fis); // file to be scanned
 
@@ -33,7 +33,7 @@ public class Main {
                 } else if (Objects.equals(command[0], Command.START_RIDE)) {
                     Controller.startRide(command[1], command[2], command[3]);
                 } else if (Objects.equals(command[0], Command.STOP_RIDE)) {
-                    Controller.stopRide(command[1], command[2], command[3],command[4]);
+                    Controller.stopRide(command[1], command[2], command[3], command[4]);
                 } else if (Objects.equals(command[0], Command.BILL)) {
                     Controller.bill(command[1]);
                 } else {
