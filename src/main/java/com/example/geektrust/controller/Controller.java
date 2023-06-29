@@ -19,13 +19,37 @@ public class Controller {
     static ArrayList<Ride> stoppedRides = new ArrayList<>();
 
     public static void addDriver(String driver_id, String x_coordinate, String y_coordinate) {
-        Driver newDriver = new Driver(driver_id, x_coordinate, y_coordinate);
-        drivers.add(newDriver);
+        boolean isIdPresent = false;
+        for (Driver driver : drivers) {
+            if (Objects.equals(driver.getDriver_id(), driver_id)) {
+                isIdPresent = true;
+                break;
+            }
+        }
+
+        if (isIdPresent) {
+            throw new RuntimeException("Driver ID Already Present.");
+        } else {
+            Driver newDriver = new Driver(driver_id, x_coordinate, y_coordinate);
+            drivers.add(newDriver);
+        }
     }
 
     public static void addRider(String rider_id, String x_coordinate, String y_coordinate) {
-        Rider newRider = new Rider(rider_id, x_coordinate, y_coordinate);
-        riders.add(newRider);
+        boolean isIdPresent = false;
+        for (Rider rider : riders) {
+            if (Objects.equals(rider.getRider_id(), rider_id)) {
+                isIdPresent = true;
+                break;
+            }
+        }
+
+        if (isIdPresent) {
+            throw new RuntimeException("Rider ID Already Present.");
+        } else {
+            Rider newRider = new Rider(rider_id, x_coordinate, y_coordinate);
+            riders.add(newRider);
+        }
     }
 
     public static void match(String rider_id) {
@@ -83,6 +107,10 @@ public class Controller {
     }
 
     public static void stopRide(String ride_id, String dest_x_coordinate, String dest_y_coordinate, String time_taken) {
+        if (Integer.parseInt(time_taken) < 0) {
+            throw new RuntimeException("Time Taken For A Ride Cannot Be Negative.");
+        }
+
         boolean isRideIdExists = false;
         for (Ride ride : rides) {
             if (Objects.equals(ride.getRide_id(), ride_id)) {
@@ -92,7 +120,7 @@ public class Controller {
         }
         if (isRideIdExists) {
             System.out.println("RIDE_STOPPED " + ride_id);
-            Ride stoppedRide = new Ride(ride_id,dest_x_coordinate,dest_y_coordinate,time_taken,true);
+            Ride stoppedRide = new Ride(ride_id, dest_x_coordinate, dest_y_coordinate, time_taken, true);
             stoppedRides.add(stoppedRide);
         } else {
             System.out.println("INVALID_RIDE");
@@ -100,34 +128,34 @@ public class Controller {
     }
 
     public static void bill(String ride_id) {
-        //from start ride array get rider id.
+        // from start ride array get rider id.
         String rider_id = null;
         String driver_id = null;
-        for(Ride ride: rides){
-            if(Objects.equals(ride.getRide_id(), ride_id)){
-                 rider_id = ride.getRider_id();
-                 driver_id = ride.getDriver_id();
-                 break;
+        for (Ride ride : rides) {
+            if (Objects.equals(ride.getRide_id(), ride_id)) {
+                rider_id = ride.getRider_id();
+                driver_id = ride.getDriver_id();
+                break;
             }
         }
 
-        //from rider array get coordinate
+        // from rider array get coordinate
         String start_x_co = null;
         String start_y_co = null;
-        for(Rider rider: riders){
-            if(Objects.equals(rider.getRider_id(), rider_id)){
+        for (Rider rider : riders) {
+            if (Objects.equals(rider.getRider_id(), rider_id)) {
                 start_x_co = rider.getX_coordinate();
                 start_y_co = rider.getY_coordinate();
                 break;
             }
         }
 
-        //from stop ride array get destinations & time taken.
+        // from stop ride array get destinations & time taken.
         String dest_x_co = null;
         String dest_y_co = null;
         String time_taken = null;
-        for(Ride ride: stoppedRides){
-            if(Objects.equals(ride.getRide_id(), ride_id)){
+        for (Ride ride : stoppedRides) {
+            if (Objects.equals(ride.getRide_id(), ride_id)) {
                 dest_x_co = ride.getDestination_x_coordinate();
                 dest_y_co = ride.getDestination_y_coordinate();
                 time_taken = ride.getTime_taken();
@@ -135,10 +163,10 @@ public class Controller {
             }
         }
 
-        //calculate distance.
-        double distance = calculateDistance(start_x_co,start_y_co,dest_x_co,dest_y_co);
+        // calculate distance.
+        double distance = calculateDistance(start_x_co, start_y_co, dest_x_co, dest_y_co);
 
-        //calculate bill
+        // calculate bill
         double base_fair = 50.0;
         double additional_km = 6.5 * distance;
         assert time_taken != null;
@@ -154,7 +182,6 @@ public class Controller {
         double roundedValue = bd.doubleValue();
 
         System.out.println("BILL " + ride_id + " " + driver_id + " " + roundedValue);
-
 
     }
 
