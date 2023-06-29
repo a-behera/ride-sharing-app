@@ -30,3 +30,5 @@ build/
 .settings/
 
 jacoco.xml
+
+.idea
