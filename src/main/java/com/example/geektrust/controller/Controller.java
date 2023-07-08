@@ -1,5 +1,6 @@
 package com.example.geektrust.controller;
 
+import com.example.geektrust.common.Constants;
 import com.example.geektrust.models.Driver;
 import com.example.geektrust.models.Match;
 import com.example.geektrust.models.Ride;
@@ -60,7 +61,7 @@ public class Controller {
                 for (Driver driver : drivers) {
                     double distance = calculateDistance(rider.getX_coordinate(), rider.getY_coordinate(),
                             driver.getX_coordinate(), driver.getY_coordinate());
-                    if (distance <= 5.0) {
+                    if (distance <= Constants.RANGE) {
                         matchedDrivers.add(driver.getDriver_id());
                     }
                 }
@@ -167,12 +168,11 @@ public class Controller {
         double distance = calculateDistance(start_x_co, start_y_co, dest_x_co, dest_y_co);
 
         // calculate bill
-        double base_fair = 50.0;
-        double additional_km = 6.5 * distance;
+        double additional_km = Constants.ADDITIONAL_KM_CHARGES * distance;
         assert time_taken != null;
-        double additional_min = 2.0 * Double.parseDouble(time_taken);
-        double total_amount = base_fair + additional_km + additional_min;
-        double service_tax = total_amount * 0.2;
+        double additional_min = Constants.ADDITIONAL_MIN_CHARGES * Double.parseDouble(time_taken);
+        double total_amount = Constants.BASE_FAIR + additional_km + additional_min;
+        double service_tax = total_amount * Constants.SERVICE_TAX_CHARGES;
 
         double bill = total_amount + service_tax;
 
