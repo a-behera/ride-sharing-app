@@ -31,4 +31,6 @@ build/
 
 jacoco.xml
 
-.idea
+.idea/
+.ReadMe.md
+.sample_input/
